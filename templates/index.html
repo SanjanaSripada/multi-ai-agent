@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Multi-Agent AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #60849c51;
+        }
+        .container {
+            margin-top: 80px;
+            max-width: 600px;
+            background: rgb(183, 225, 230);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .btn-primary {
+            width: 100%;
+        }
+        .form-section {
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Smart Multi-Agent AI Processor</h2>
+
+        <!-- Email Input -->
+        <form action="/process" method="POST" class="form-section">
+            <div class="mb-3">
+                <label for="email_text" class="form-label">Enter Email Text</label>
+                <textarea class="form-control" name="email_text" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mb-3">Submit Email</button>
+        </form>
+
+        <!-- JSON Upload -->
+        <!-- JSON Input -->
+<form id="jsonForm" class="form-section">
+    <div class="mb-3">
+        <label for="json_input" class="form-label">Paste JSON Data</label>
+        <textarea class="form-control" id="json_input" rows="5" required>{ "key": "value" }</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit JSON</button>
+</form>
+
+<script>
+    document.getElementById("jsonForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const jsonData = document.getElementById("json_input").value;
+
+        fetch('/process', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: jsonData
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Response:\n" + JSON.stringify(data, null, 2));
+        })
+        .catch(error => {
+            alert("Error:\n" + error);
+        });
+    });
+</script>
+
+        <!-- PDF Upload -->
+        <form action="/process" method="POST" enctype="multipart/form-data" class="form-section">
+            <div class="mb-3">
+                <label for="pdf_file" class="form-label">Upload PDF</label>
+                <input type="file" class="form-control" name="pdf_file" accept=".pdf" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit PDF</button>
+        </form>
+    </div>
+</body>
+</html>
